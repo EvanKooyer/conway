@@ -2,17 +2,32 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
-import patterns
+from patterns import patterns
+import random
 
 def generate_universe(size, num_patterns=0):
     initial_state = np.zeros((size,size))
+
+    for i in range(0,num_patterns):
+        ptrn = random.choice(list(patterns.values()))
+        xlen = len(ptrn)
+        ylen = len(ptrn[0])
+
+        insert_coords = [random.randint(0,size), random.randint(0,size)]
+
+        if insert_coords[0] + xlen > size:
+            insert_coords[0] = size - xlen
+        if insert_coords[1] + ylen >size:
+            insert_coords[1] = size - ylen
+
+        initial_state[
+                insert_coords[0]:insert_coords[0] + xlen,
+                insert_coords[1]:insert_coords[1] + ylen
+        ] = ptrn
+
+
     return initial_state
 
-universe = generate_universe(128)
-
-seed = patterns.patterns['glider']
-
-universe[1:4, 1:4] = seed
 
 def evolve(x, y, universes):
     sum_neighbors = np.sum(universes[x-1:x+2, y-1:y+2]) - universes[x,y]
@@ -46,5 +61,10 @@ def animate(universes, num_generations=20):
 
     plt.show()
 
+def main(size=32, patterns=12, generations=20):
+    universe = generate_universe(size, patterns)
+    animate(universe, generations)
+
+
 if __name__ == '__main__':
-    animate(universe)
+    main()
