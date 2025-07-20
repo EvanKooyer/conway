@@ -12,3 +12,4 @@ of generations.
 - [ ] Refactor and document each function and try to optimize as much as I can.
 - [ ] Make the grid run indefinitely instead of pre-render a set # of generations.
 - [ ] Take command line arguments to customize grid size, patterns, etc.
+- [x] Add type hinting and docstrings to functions
